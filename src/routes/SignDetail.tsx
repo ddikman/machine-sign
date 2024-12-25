@@ -100,7 +100,7 @@ export class SignDetail extends Component<SignDetailProps, SignDetailState> {
             <div className="app-root">
                 <div id="settings">
                     <div className="sign-root">
-                        <Link to="/list" style={{ color: 'white', marginBottom: '5mm', display: 'block' }}>Back to list</Link>
+                        <Link to={{ pathname: '/' }} style={{ color: 'white', marginBottom: '5mm', display: 'block' }}>Back to list</Link>
                         <SettingsSign
                             sign={this.state.sign}
                             onChange={() => this.onChange()}

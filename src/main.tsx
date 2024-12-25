@@ -14,11 +14,11 @@ const router = createBrowserRouter([
         element: <SignList />,
     },
     {
-        path: "/new",
+        path: "/sign",
         element: <SignDetailWrapper />,
     },
     {
-        path: "/:id",
+        path: "/sign/:id",
         element: <SignDetailWrapper />,
     },
     {

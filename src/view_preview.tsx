@@ -201,7 +201,7 @@ class PreviewSignFooter extends Component<{ id: number | null, sign: Sign }, { q
   }
 
   override componentDidUpdate() {
-    const url = this.props.sign?.wikiURL?.trim() ?? "http://wiki.makerspace.se";
+    const url = this.props.sign?.wikiURL?.trim() || "http://wiki.makerspace.se";
 
     if (url != this.lastQRUrl) {
       this.lastQRUrl = url;
