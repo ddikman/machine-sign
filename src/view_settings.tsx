@@ -7,12 +7,13 @@ type OnChange = () => void;
 type OnChangeBool = (value: boolean) => void;
 
 const SettingsSectionGroup = ({ name, children, enabled = true, onChangeEnabled }: { name: string, children: any, enabled?: boolean, onChangeEnabled?: OnChangeBool }) => {
-    const enable = onChangeEnabled ? (<input type="checkbox" name="enabled" checked={enabled} onChange={(e) => onChangeEnabled((e.target as HTMLInputElement).checked)} />) : null;
+    const identifier = name.toLowerCase().replace(/\s+/g, '-');
+    const toggle = onChangeEnabled ? (<input type="checkbox" id={identifier} checked={enabled} onChange={(e) => onChangeEnabled((e.target as HTMLInputElement).checked)} />) : null;
     return (
         <div className="sign-section">
             <div className="settings-section-header">
-                {enable}
-                <h2>{name}</h2>
+                {toggle}
+                <h2><label htmlFor={identifier}>{name}</label></h2>
             </div>
             {enabled ? children : null}
         </div>

@@ -15,7 +15,7 @@ export function SignList() {
             {signs.length === 0 ? (
                 <div className="empty-state">
                     <p>No signs are created yet, be the first to add a sign now!</p>
-                    <button onClick={() => navigate('/sign')}>Add sign</button>
+                    <button onClick={() => navigate('/signg')}>Add sign</button>
                 </div>
             ) : (
                 // Will handle list view later

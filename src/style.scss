@@ -621,6 +621,10 @@ div.sign-selector {
 			padding-top: 2mm;
 			padding-left: 5mm;
 			font-size: 12pt;
+
+      label {
+        cursor: pointer;
+      }
 		}
 	}
 }
