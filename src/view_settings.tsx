@@ -2,6 +2,7 @@ import * as React from 'react'
 import { SafetyIcon, Material, Access, Sign, Section, SectionOutOfOrder, SectionSafety, SectionMaterials, SectionFreeText, SafetyItem, SectionCleanup, CleanupItem, PaperSize, SectionMaintenance, MaintenanceItem } from './data';
 import { safetyIcon2name, iconDelete, ColorClass } from './view_common';
 import { authenticateWithGithub, createPullRequest } from './github';
+import './style.scss';
 
 type OnChange = () => void;
 type OnChangeBool = (value: boolean) => void;

@@ -1,14 +1,25 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './index.css'
-import { App } from './App.tsx'
-import { GitHubCallback } from './github-callback';
-import { createBrowserRouter } from 'react-router-dom';
+import './styles/layout.scss'
+import { SignList } from './routes/SignList'
+import { SignDetailWrapper } from './routes/SignDetail'
+import { GitHubCallback } from './github-callback'
+import './style.scss';
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <App />,
+        element: <SignList />,
+    },
+    {
+        path: "/new",
+        element: <SignDetailWrapper />,
+    },
+    {
+        path: "/:id",
+        element: <SignDetailWrapper />,
     },
     {
         path: "/github-callback",
@@ -17,7 +28,7 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
+    <StrictMode>
+        <RouterProvider router={router} />
+    </StrictMode>,
 )

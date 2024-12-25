@@ -1,0 +1,65 @@
+.app-root {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+#settings {
+    flex: 1;
+    min-width: 400px;
+    max-width: 600px;
+    overflow-y: auto;
+    padding: 1rem;
+    background: var(--background-color);
+}
+
+#preview {
+    flex: 2;
+    overflow-y: auto;
+    background: white;
+}
+
+.sign-root {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.sign-selector {
+    h1 {
+        margin: 0 0 1rem 0;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 1rem 0;
+    }
+
+    li {
+        padding: 0.5rem;
+        cursor: pointer;
+        border-radius: 4px;
+
+        &:hover {
+            background: var(--hover-color);
+        }
+    }
+
+    .selector-machine-model {
+        color: var(--text-secondary);
+        font-size: 0.9em;
+        margin-left: 0.5rem;
+    }
+
+    // Styles for the small selector (dropdown)
+    &.sign-selector {
+        width: 100%;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        background: var(--background-color);
+    }
+}
