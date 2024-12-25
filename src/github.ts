@@ -1,7 +1,3 @@
-interface GitHubAuth {
-    access_token: string;
-    token_type: string;
-}
 
 // Store state in localStorage to prevent CSRF attacks
 function generateState(): string {

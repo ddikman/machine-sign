@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Sign } from '../data';
 import { PreviewSign } from '../view_preview';
@@ -50,16 +50,17 @@ export class SignDetail extends Component<SignDetailProps, SignDetailState> {
             return;
         }
 
-        try {
-            const response = await fetch(`data/signs/${this.props.id}`);
-            const json = await response.json();
-            const sign = new Sign();
-            initializeWithJson(sign, json.data.data);
-            this.setState({ sign, saving: false, dirty: false });
-        } catch (error) {
-            console.error(error);
-            this.props.navigate('/');
-        }
+        // TODO: Implement using local data
+        // try {
+        //     const response = await fetch(`data/signs/${this.props.id}`);
+        //     const json = await response.json();
+        //     const sign = new Sign();
+        //     initializeWithJson(sign, json.data.data);
+        //     this.setState({ sign, saving: false, dirty: false });
+        // } catch (error) {
+        //     console.error(error);
+        //     this.props.navigate('/');
+        // }
     }
 
     onChange() {

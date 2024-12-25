@@ -1,16 +1,10 @@
-import * as React from 'react'
-import { SafetyIcon, Material, Access, Sign, Section, SectionOutOfOrder, SectionSafety, SectionMaterials, SectionFreeText, SafetyItem, SectionCleanup, CleanupItem, PaperSize, SectionMaintenance, MaintenanceItem } from './data';
-import { safetyIcon2name, iconDelete, ColorClass } from './view_common';
+import { SafetyIcon, Material, Access, Sign, Section, SectionSafety, SectionMaterials, SectionFreeText, SafetyItem, SectionCleanup, CleanupItem, PaperSize, SectionMaintenance, MaintenanceItem, } from './data';
+import { safetyIcon2name, iconDelete } from './view_common';
 import { authenticateWithGithub, createPullRequest } from './github';
 import './style.scss';
 
 type OnChange = () => void;
 type OnChangeBool = (value: boolean) => void;
-
-
-function dirty() {
-
-}
 
 const SettingsSectionGroup = ({ name, children, enabled = true, onChangeEnabled }: { name: string, children: any, enabled?: boolean, onChangeEnabled?: OnChangeBool }) => {
     const enable = onChangeEnabled ? (<input type="checkbox" name="enabled" checked={enabled} onChange={(e) => onChangeEnabled((e.target as HTMLInputElement).checked)} />) : null;
@@ -69,7 +63,7 @@ const SettingsMaintenanceItem = ({ item, onChange, onDelete }: { item: Maintenan
 };
 
 const SettingsSafetyItem = ({ item, onChange, onDelete }: { item: SafetyItem, onChange: OnChange, onDelete: () => void }) => {
-    const safetyIcons = Object.keys(SafetyIcon).map((k: any) => SafetyIcon[k] as any).filter(k => typeof k === "number") as number[];
+    const safetyIcons = Object.values(SafetyIcon).filter((v): v is number => typeof v === 'number');
 
     return (
         <div className="selection-row">
@@ -115,8 +109,7 @@ accessMessage[Access.UsableByEveryone] = "All members may use this machine";
 accessMessage[Access.UsableByEveryoneCareful] = "All members may use this machine if it can be done in a safe way";
 
 const SignHeader = ({ sign, onChange }: { sign: Sign, onChange: OnChange }) => {
-    const model = sign.model ? (<span id="machine-model">Model: {sign.model}</span>) : null;
-    const accessLevels = Object.keys(Access).map((k: any) => Access[k] as any).filter(k => typeof k === "number") as number[];
+    const accessLevels = Object.values(Access).filter((v): v is number => typeof v === 'number');
 
     return (<SettingsSectionGroup name="Machine">
         <input type="text" placeholder="Machine name" value={sign.name} onInput={e => { sign.name = (e.target as HTMLInputElement).value; onChange(); }} />
@@ -147,7 +140,7 @@ function setWikiURL(sign: Sign, url: string) {
 }
 
 const SettingsSignMeta = ({ sign, onChange }: { sign: Sign, onChange: OnChange }) => {
-    const paperSizes = Object.keys(PaperSize).map((k: any) => PaperSize[k] as any).filter(k => typeof k === "number") as number[];
+    const paperSizes = Object.values(PaperSize).filter((v): v is number => typeof v === 'number');
     return (<SettingsSectionGroup name="Sign">
         <select value={sign.paperSize} onInput={e => { sign.paperSize = Number((e.target as HTMLSelectElement).value) as PaperSize; onChange(); }}>
             {paperSizes.map(v => (<option key={v} value={v}>{PaperSize[v]}</option>))}
@@ -177,15 +170,6 @@ type SaveState = 'saved' | 'saving' | 'dirty';
 async function createGithubPR(sign: Sign) {
     try {
         const token = await authenticateWithGithub(import.meta.env.VITE_GITHUB_CLIENT_ID);
-
-        // Get authenticated user info
-        const userResponse = await fetch('https://api.github.com/user', {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Accept': 'application/vnd.github.v3+json',
-            }
-        });
-        const user = await userResponse.json();
 
         const files = [{
             path: `signs/${sign.name.toLowerCase().replace(/\s+/g, '-')}.json`,

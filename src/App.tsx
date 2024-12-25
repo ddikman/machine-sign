@@ -6,20 +6,10 @@ import { SettingsSign } from './view_settings';
 import { debounce } from 'ts-debounce';
 import { Component } from 'react';
 
-function initializeWithJson(obj: any, json: any) {
-    // TODO: Handle list
-    for (let prop in obj) {
-        if (!json.hasOwnProperty(prop)) {
-            continue;
-        }
-
-        console.assert(typeof obj[prop] === typeof json[prop]);
-        if (typeof obj[prop] === 'object' && !Array.isArray(obj[prop])) {
-            initializeWithJson(obj[prop], json[prop]);
-        } else {
-            obj[prop] = json[prop];
-        }
-    }
+function initializeWithJson(obj: Sign, json: Record<string, unknown>) {
+    // TODO: Re-implement this
+    console.log("initializeWithJson", obj, json);
+    throw new Error("Not implemented");
 }
 
 
@@ -43,7 +33,7 @@ interface SignSelectorProps {
     onOpen: (id: null | number) => void;
 }
 class SignSelector extends Component<SignSelectorProps, { signs: SignMeta[] }> {
-    constructor(props: any) {
+    constructor(props: SignSelectorProps) {
         super(props);
         this.state = { signs: [] }
     }
@@ -76,7 +66,7 @@ class SignSelector extends Component<SignSelectorProps, { signs: SignMeta[] }> {
                     </li>
                 </ul>
                 <ul>
-                    {this.state.signs.map((item: any) => SignItem({ item: item, onOpen: () => this.props.onOpen(item.id) }))}
+                    {this.state.signs.map((item: SignMeta) => SignItem({ item, onOpen: () => this.props.onOpen(item.id) }))}
                 </ul>
             </div>
         )
@@ -84,11 +74,6 @@ class SignSelector extends Component<SignSelectorProps, { signs: SignMeta[] }> {
 }
 
 class SignSelectorSmall extends SignSelector {
-    override componentDidUpdate(lastProps: SignSelectorProps, lastState: any, snapshot: any) {
-        if (lastProps.selectedId != this.props.selectedId) {
-            this.findSigns();
-        }
-    }
 
     override render() {
         return (
@@ -100,13 +85,11 @@ class SignSelectorSmall extends SignSelector {
     }
 }
 
-// How often to save (at most). In milliseconds
-const SavingInterval = 2000;
+export class App extends Component<object, { id: number | null, sign: Sign | null, saving: boolean, dirty: boolean }> {
+    static savingIntervalMilliseconds = 2000;
+    debouncedSave = debounce(() => this.save(), App.savingIntervalMilliseconds);
 
-export class App extends Component<{}, { id: number | null, sign: Sign | null, saving: boolean, dirty: boolean }> {
-    debouncedSave = debounce(() => this.save(), SavingInterval);
-
-    constructor(props: {}) {
+    constructor(props: object) {
         super(props);
         this.state = { sign: null, id: null, saving: false, dirty: false };
         this.openFromURL();

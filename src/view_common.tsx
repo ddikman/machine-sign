@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { Access, Sign, SafetyIcon } from './data';
 
 export const safetyIcon2svg: { [id: number]: string } = {};

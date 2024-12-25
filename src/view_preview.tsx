@@ -110,14 +110,14 @@ accessMessage[Access.UsableByEveryoneCareful] = "You may use this machine if you
 class CourseQRCode extends Component<{ sign: Sign }, { qrData: string }> {
   lastQRUrl: string | null = null;
 
-  constructor(props: any) {
+  constructor(props: { sign: Sign }) {
     super(props);
     this.state = { qrData: "" };
-    this.componentDidUpdate(null, null, null);
+    this.componentDidUpdate();
   }
 
-  override componentDidUpdate(lastProps: any, nextState: any, context: any) {
-    let url = this.props.sign.courseURL.trim();
+  override componentDidUpdate() {
+    const url = this.props.sign.courseURL.trim();
 
     if (url != this.lastQRUrl) {
       this.lastQRUrl = url;
@@ -194,17 +194,14 @@ const SignOutOfOrder = ({ sign }: { sign: Sign }) => {
 class PreviewSignFooter extends Component<{ id: number | null, sign: Sign }, { qrData: string }> {
   lastQRUrl: string | null = null;
 
-  constructor(props: any) {
+  constructor(props: { id: number | null, sign: Sign }) {
     super(props);
     this.state = { qrData: "" };
-    this.componentDidUpdate(null, null, null);
+    this.componentDidUpdate();
   }
 
-  override componentDidUpdate(lastProps: any, nextState: any, context: any) {
-    let url = this.props.sign.wikiURL.trim();
-    if (!url) {
-      url = "http://wiki.makerspace.se";
-    }
+  override componentDidUpdate() {
+    const url = this.props.sign?.wikiURL?.trim() ?? "http://wiki.makerspace.se";
 
     if (url != this.lastQRUrl) {
       this.lastQRUrl = url;
