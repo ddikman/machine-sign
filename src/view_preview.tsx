@@ -246,7 +246,7 @@ class PreviewSignFooter extends Component<{ id: number | null, sign: Sign }, { q
                 <img src="static/images/zondicons/exclamation-outline.svg" />
                 <div>
                   <h3>Changes needed?</h3>
-                  <p className="pre">Update this sign at<br />sign.arongranberg.com/{this.props.id}</p>
+                  <p className="pre">Edit this at ddikman.github.io/machine-sign.</p>
                 </div>
               </div>)
               : null
@@ -255,7 +255,7 @@ class PreviewSignFooter extends Component<{ id: number | null, sign: Sign }, { q
         {
           this.props.sign.paperSize == PaperSize.A5 ? (
             <div className="sign-footer-tiny">
-              <p>Changes needed? Update this sign at sign.arongranberg.com/{this.props.id}</p>
+              <p>Changes needed? Edit this at ddikman.github.io/machine-sign.</p>
             </div>
           ) : null
         }
