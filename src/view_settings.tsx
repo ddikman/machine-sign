@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { SafetyIcon, Material, Access, Sign, Section, SectionOutOfOrder, SectionSafety, SectionMaterials, SectionFreeText, SafetyItem, SectionCleanup, CleanupItem, PaperSize, SectionMaintenance, MaintenanceItem } from './data';
 import { safetyIcon2name, iconDelete, ColorClass } from './view_common';
+import { authenticateWithGithub, createPullRequest } from './github';
 
 type OnChange = () => void;
 type OnChangeBool = (value: boolean) => void;
@@ -172,19 +173,71 @@ function SettingsSection({ section, onChange }: { section: Section, onChange: On
 
 type SaveState = 'saved' | 'saving' | 'dirty';
 
-function SettingsSave({ onSave, onDelete, autosaved, saving }: { onSave: () => void, onDelete: null | (() => void), autosaved: boolean, saving: SaveState }) {
+async function createGithubPR(sign: Sign) {
+    try {
+        const token = await authenticateWithGithub(import.meta.env.VITE_GITHUB_CLIENT_ID);
+
+        // Get authenticated user info
+        const userResponse = await fetch('https://api.github.com/user', {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Accept': 'application/vnd.github.v3+json',
+            }
+        });
+        const user = await userResponse.json();
+
+        const files = [{
+            path: `signs/${sign.name.toLowerCase().replace(/\s+/g, '-')}.json`,
+            content: JSON.stringify(sign, null, 2)
+        }];
+
+        const prUrl = await createPullRequest(
+            token,
+            'your-org',
+            'your-repo',
+            'main',
+            `Update sign: ${sign.name}`,
+            files
+        );
+
+        window.open(prUrl, '_blank');
+    } catch (error) {
+        console.error('Failed to create PR:', error);
+        alert('Failed to create GitHub PR. Please try again.');
+    }
+}
+
+function SettingsSave({ onSave, onDelete, autosaved, saving, sign }: {
+    onSave: () => void,
+    onDelete: null | (() => void),
+    autosaved: boolean,
+    saving: SaveState,
+    sign: Sign
+}) {
     return (
         <SettingsSectionGroup
             enabled={true}
             name="Save"
         >
             {onDelete && <button onClick={onDelete}>Delete</button>}
-            <button onClick={onSave}>{saving == 'saving' || saving == 'dirty' ? "Saving..." : (autosaved ? "Autosaved" : "Save")}</button>
+            <button onClick={onSave}>
+                {saving == 'saving' || saving == 'dirty' ? "Saving..." : (autosaved ? "Autosaved" : "Save")}
+            </button>
+            <button onClick={() => createGithubPR(sign)}>
+                Create GitHub PR
+            </button>
         </SettingsSectionGroup>
     )
 }
 
-export const SettingsSign = ({ sign, onChange, onSave, onDelete, autosaved, saving }: { sign: Sign, onChange: OnChange, onSave: () => void, onDelete: null | (() => void), autosaved: boolean, saving: SaveState }) => {
+export const SettingsSign = ({ sign, onChange, onSave, onDelete, autosaved, saving }: {
+    sign: Sign,
+    onChange: OnChange,
+    onSave: () => void,
+    onDelete: null | (() => void),
+    autosaved: boolean,
+    saving: SaveState
+}) => {
     const sections = sign.sections;
     const arr = [
         sections.allowedMaterials,
@@ -200,7 +253,7 @@ export const SettingsSign = ({ sign, onChange, onSave, onDelete, autosaved, savi
         <SignOutOfOrder sign={sign} onChange={onChange} />
         {arr.map(s => <SettingsSection key={s.defaultHeader()} section={s} onChange={onChange} />)}
         <SettingsSignFooter sign={sign} onChange={onChange} />
-        <SettingsSave onSave={onSave} onDelete={onDelete} autosaved={autosaved} saving={saving} />
+        <SettingsSave onSave={onSave} onDelete={onDelete} autosaved={autosaved} saving={saving} sign={sign} />
     </>);
 };
 
