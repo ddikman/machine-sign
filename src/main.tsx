@@ -8,6 +8,8 @@ import { SignDetailWrapper } from './routes/SignDetail'
 import { GitHubCallback } from './github-callback'
 import './style.scss';
 
+const basename = import.meta.env.VITE_BASE_URL || '/'
+
 const router = createBrowserRouter([
     {
         path: "/",
@@ -25,7 +27,9 @@ const router = createBrowserRouter([
         path: "/github-callback",
         element: <GitHubCallback />,
     }
-]);
+], {
+    basename: basename
+});
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
