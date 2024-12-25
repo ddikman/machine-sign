@@ -47,6 +47,7 @@ export class SignDetail extends Component<SignDetailProps, SignDetailState> {
             const sign = new Sign();
             sign.name = "New Sign";
             this.setState({ sign, saving: false, dirty: false });
+            console.log('Loaded new page with empty sign');
             return;
         }
 
