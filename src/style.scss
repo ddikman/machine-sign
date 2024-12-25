@@ -1,0 +1,807 @@
+$green: hsl(130, 74%, 36%);
+$green-dark: hsl(130, 67%, 28%);
+$yellow: hsl(49, 87%, 40%);
+$yellow-dark: hsl(49, 67%, 28%);
+$red: hsl(19, 87%, 40%);
+$red-dark: hsl(19, 79%, 34%);
+$orange: hsl(34, 75%, 50%);
+$orange-dark: hsl(34, 75%, 40%);
+$blue: #3898E5;
+$blue-dark: #1877B7;
+$red: #D12829;
+$red-dark: #A22425;
+$grey: #A1A1A1;
+$grey-dark: #727272;
+$grey2: #555555;
+$grey2-dark: #444444;
+$purple: #A12B6D;
+$purple-dark: #87205a;
+$background: #343434;
+$background: #EEE;
+$settings-background: #111;
+$active-color: rgb(45, 138, 214);
+
+body {
+	margin: 0px;
+	padding: 0px;
+}
+
+.app-root {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	font-family: 'Bitter', sans;
+	margin-bottom: 60px;
+}
+
+#settings {
+	width: 40%;
+}
+
+#preview {
+	background: $settings-background;
+	padding: 20px;
+	flex-grow: 1;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.sign-access-label {
+	margin: 5mm;
+	display: block;
+	text-align: center;
+	font-size: 20pt;
+}
+
+.sign-access {
+	display: flex;
+	flex-direction: row;
+	padding-left: 10mm;
+	padding-right: 10mm;
+	align-items: center;
+	padding-top: 2mm;
+	padding-bottom: 2mm;
+	justify-content: flex-start;
+
+	>div {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-right: 10mm;
+		flex-grow: 0;
+	}
+
+	>span {
+		flex-grow: 1;
+	}
+
+	img {
+		width: 18mm;
+		height: 18mm;
+	}
+
+	h3 {
+		margin: 0px;
+		font-size: 10pt;
+		margin-top: 1mm;
+		margin-left: -15px;
+		margin-right: -15px;
+	}
+}
+
+#preview .sign-root {
+	padding-left: 5mm;
+	padding-right: 5mm;
+	padding-top: 5mm;
+	padding-bottom: 5mm;
+	border-radius: 4px;
+	overflow: hidden;
+	width: 210mm - 2*5mm;
+	height: 296.9mm - 2*5mm;
+	color: white;
+	background: $background;
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+
+	h1 {
+		margin: 0mm;
+		font-size: 36pt;
+	}
+
+	h2 {
+		margin: 0mm;
+		font-size: 12pt;
+	}
+
+	.sign-name {
+		//background: #1877B7;
+		padding: 2mm 5mm 1mm 10mm;
+		flex-grow: 0;
+
+		span {
+			margin: 0mm;
+			margin-left: 1mm;
+			font-size: 12pt;
+		}
+	}
+
+	.sign-section {
+		background: $grey;
+		margin-top: 1mm;
+		margin-bottom: 1mm;
+		border-radius: 1mm;
+		overflow: hidden;
+
+		>p {
+			padding-left: 5mm;
+		}
+
+		h2 {
+			padding-bottom: 2mm;
+			padding-top: 2mm;
+			padding-left: 5mm;
+			background: $grey-dark;
+		}
+	}
+
+	.sign-status-outoforder {
+		background: $grey2;
+
+		h2 {
+			background: $grey2-dark;
+		}
+
+		p {
+			margin: 5mm;
+			display: block;
+			text-align: center;
+			font-size: 12pt;
+		}
+	}
+
+	.sign-access-course {
+		background: $red;
+
+		h2 {
+			background: $red-dark;
+		}
+	}
+
+	.sign-access-everyone-careful {
+		background: $orange;
+
+		h2 {
+			background: $orange-dark;
+		}
+	}
+
+	.sign-access-everyone {
+		background: $green;
+
+		h2 {
+			background: $green-dark;
+		}
+	}
+
+	.sign-materials-allowed {
+		background: $green;
+
+		h2 {
+			background: $green-dark;
+		}
+	}
+
+	.sign-materials-prohibited {
+		background: $red;
+
+		h2 {
+			background: $red-dark;
+		}
+	}
+
+	.sign-quickstart {
+		background: $purple;
+
+		h2 {
+			background: $purple-dark;
+		}
+
+		p {
+			white-space: pre-line;
+		}
+	}
+
+	.sign-safety {
+		background: $blue;
+
+		h2 {
+			background: $blue-dark;
+		}
+	}
+
+	.sign-cleanup {
+		background: $grey2;
+
+		h2 {
+			background: $grey2-dark;
+		}
+	}
+
+	.sign-footer,
+	.sign-outoforder-icons {
+		display: flex;
+		margin-top: auto;
+		flex-direction: row;
+		justify-content: space-between;
+		justify-items: start;
+		flex-grow: 0;
+		flex-wrap: nowrap;
+		padding-top: 5mm;
+
+		div {
+			max-width: 75mm;
+			display: flex;
+			flex-direction: row;
+			justify-content: stretch;
+			align-items: center;
+			height: 17mm;
+			padding: 2mm 0mm 2mm 0mm;
+			margin-left: 2mm;
+			margin-right: 2mm;
+
+			&:first-child {
+				margin-left: 0mm;
+			}
+
+			&:last-child {
+				margin-right: 0mm;
+			}
+
+			div {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: flex-start;
+				margin-left: 2mm;
+
+				h3 {
+					text-align: left;
+					display: block;
+					margin: 0mm;
+				}
+
+				p {
+					width: 100%;
+					margin: 0mm;
+					font-size: 10pt;
+					overflow-wrap: anywhere;
+					word-break: break-all;
+				}
+			}
+
+			img {
+				margin: 0mm;
+				height: 100%;
+				align-self: center;
+			}
+		}
+	}
+
+	.sign-footer {
+		color: #333;
+	}
+
+	.sign-outoforder-icons {
+		color: white;
+		margin-left: 10mm;
+		margin-right: 10mm;
+		padding-top: 0mm;
+		justify-items: center;
+		justify-content: center;
+
+		div {
+			margin-left: 5mm;
+			margin-right: 5mm;
+			max-width: unset;
+		}
+	}
+}
+
+img.invert {
+	filter: invert(100%);
+}
+
+.sign-icon-allowed {
+	// Filter from https://codepen.io/sosuke/pen/Pjoqqp
+	//filter: invert(47%) sepia(33%) saturate(3755%) hue-rotate(86deg) brightness(107%) contrast(91%);
+	filter: invert(100%);
+}
+
+.sign-icon-not-allowed {
+	//filter: invert(22%) sepia(90%) saturate(2315%) hue-rotate(354deg) brightness(81%) contrast(100%);
+	filter: invert(100%);
+}
+
+.item-list-horizontal-small {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	padding-left: 5mm;
+	padding-right: 5mm;
+	padding-top: 1mm;
+	padding-bottom: 2mm;
+
+	&.many div {
+		width: 59mm;
+	}
+
+	div {
+		margin-left: 1mm;
+		margin-right: 3mm;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		align-items: center;
+
+		img {
+			align-self: center;
+			height: 6mm;
+		}
+
+		p {
+			margin-bottom: 1mm;
+			margin-top: 2mm;
+			margin-left: 3mm;
+		}
+	}
+}
+
+.item-list {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	padding-left: 5mm;
+	padding-right: 5mm;
+	padding-top: 3mm;
+	padding-bottom: 2mm;
+
+	div {
+		width: 29.5mm;
+		margin-left: 1mm;
+		margin-right: 1mm;
+		display: flex;
+		flex-direction: column;
+		flex-wrap: nowrap;
+
+		img {
+			align-self: center;
+			height: 8mm;
+		}
+
+		p {
+			text-align: center;
+			margin-bottom: 1mm;
+			margin-top: 2mm;
+		}
+	}
+}
+
+.item-list-horizontal {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: start;
+	padding-left: 5mm;
+	padding-right: 5mm;
+
+	div {
+		height: 20mm;
+		margin-left: 1mm;
+		margin-right: 1mm;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		align-content: center;
+
+		img {
+			align-self: center;
+			height: 8mm;
+		}
+
+		p {
+			text-align: left;
+			margin-left: 3mm;
+			width: 40mm;
+			align-self: center;
+		}
+	}
+}
+
+#settings {
+	background: $settings-background;
+}
+
+div.sign-selector {
+	margin-left: auto;
+	margin-right: auto;
+	//border: 4px solid #469ABE;
+	min-width: 400px;
+	display: flex;
+	flex-direction: column;
+
+	ul {
+		box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
+		margin: 0px;
+		margin-top: 20px;
+		border-radius: 5px;
+		overflow: hidden;
+		list-style: none;
+		padding: 0px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	h1 {
+		background: #469ABE;
+		border-radius: 0px 0px 5px 5px;
+		box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
+		color: white;
+		padding: 10px;
+		margin: 0px;
+		padding-left: 10px;
+		margin-bottom: 10px;
+	}
+
+	li {
+		border-bottom: 2px solid #07719F;
+		background: #2785AD;
+		color: white;
+		padding: 5px;
+		padding-left: 10px;
+		font-weight: bold;
+		cursor: pointer;
+
+		&:hover {
+			background: #07719F;
+		}
+
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+
+		.selector-machine-model {
+			font-size: 9pt;
+			opacity: 80%;
+		}
+	}
+}
+
+#settings .sign-root {
+	color: white;
+	margin-left: 5mm;
+	margin-right: 5mm;
+	margin-top: 5mm;
+
+	.sign-section {
+		background: $grey2;
+		margin-top: 4px;
+		margin-bottom: 4px;
+		border-radius: 1mm; // mm for consistency with preview
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+
+		>p {
+			padding-left: 5mm;
+		}
+	}
+
+	// For opening different documents
+	select.sign-selector {
+		margin-left: 0mm;
+		width: 100%;
+		-moz-appearance: none;
+		-webkit-appearance: none;
+		appearance: none;
+		background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat right 10px center #444;
+		transition: border 100ms;
+
+		&:hover {
+			border-color: $active-color;
+		}
+	}
+
+	.selection-row {
+		display: flex;
+		flex-direction: row;
+		justify-content: start;
+
+		input {
+			flex-grow: 1;
+		}
+
+		button {
+			// Delete button
+			display: flex;
+			flex-shrink: 0;
+			justify-content: center;
+			padding-left: 1mm;
+			padding-right: 1mm;
+			width: 8mm;
+
+			img {
+				width: 100%;
+				margin-left: 1px;
+			}
+		}
+	}
+
+	button {
+		background: #444;
+		border-radius: 1mm;
+		border: 2px solid #333;
+		margin: 1mm;
+		color: white;
+		padding: 1mm 3mm 1mm 3mm;
+		outline: none;
+		transition: background 30ms;
+		outline: none;
+		max-width: 33%;
+
+		&::-moz-focus-inner {
+			border: 0;
+		}
+
+		&:hover {
+			background: #3A3A3A;
+		}
+	}
+
+	input,
+	select,
+	textarea {
+		display: block;
+		margin: 1mm;
+		background: #444;
+		color: white;
+		border: 1px solid #000;
+		border-radius: 1mm;
+		padding: 1mm;
+		padding-left: 2mm;
+		outline: none;
+
+		&::-moz-focus-inner {
+			border: 0;
+		}
+
+		&:focus {
+			border-color: $active-color;
+		}
+	}
+
+	textarea {
+		min-height: 100px;
+	}
+
+	select:-moz-focusring {
+		// https://stackoverflow.com/questions/9119629/remove-dotted-border-outline-of-focused-dropdown-menu
+		color: transparent;
+		text-shadow: 0 0 0 white;
+	}
+
+	.settings-section-header {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		background: $grey2-dark;
+
+		input {
+			// Checkboxes
+			margin-left: 3mm;
+			//filter: grayscale(1);
+			outline: 0;
+		}
+
+		h2 {
+			margin: 0mm 0mm 0mm 5mm;
+			padding-bottom: 2mm;
+			padding-top: 2mm;
+			padding-left: 5mm;
+			font-size: 14pt;
+		}
+	}
+}
+
+.page {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	height: 209.5mm;
+	page-break-after: always;
+}
+
+@media only print {
+
+	#preview .sign-root {
+		border-radius: 0px;
+		background: unset;
+	}
+
+	#settings {
+		display: none;
+
+	}
+
+	#preview {
+		display: block;
+		background: unset;
+		padding: 0mm;
+		margin: 0mm;
+	}
+
+	.app-root {
+		display: block;
+		flex-direction: row;
+		width: unset;
+	}
+}
+
+#preview {
+	flex-wrap: wrap;
+}
+
+#machine-model {
+	padding-bottom: 2mm;
+	display: block;
+}
+
+#preview .sign-root.a5 {
+	width: 148mm - 2*5mm;
+	height: 210mm - 2*5mm;
+
+	h1 {
+		font-size: 14pt;
+	}
+
+	h2 {
+		font-size: 12pt;
+		padding: 1mm 5mm;
+	}
+
+	.sign-access-label {
+		margin: 2mm;
+		font-size: 14pt;
+	}
+
+	p {
+		font-size: 11pt;
+	}
+
+	.item-list-horizontal-small {
+
+		&.many div {
+			width: 38.5mm;
+		}
+
+		img {
+			height: 5mm;
+		}
+	}
+
+	.item-list {
+		img {
+			height: 6mm;
+		}
+	}
+
+	.sign-name {
+		padding: 2mm 5mm 2mm 5mm;
+	}
+
+	#machine-model {
+		font-size: 11pt;
+		margin-left: 0mm;
+		padding-bottom: 0.5mm;
+	}
+
+	.sign-footer {
+		padding-top: 1mm;
+
+		div {
+			max-width: 90mm;
+		}
+
+		>div:last-child {
+			flex-direction: row-reverse;
+
+			div {
+				text-align: right;
+				margin-right: 2mm;
+				align-items: flex-end;
+			}
+		}
+	}
+}
+
+.item-list-rows {
+	display: flex;
+	flex-direction: column;
+	padding-left: 5mm;
+	padding-right: 5mm;
+	padding-top: 3mm;
+	padding-bottom: 2mm;
+	gap: 1mm;
+
+	div {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 2mm;
+
+		span {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.label {
+			flex: 2;
+		}
+
+		.interval {
+			width: 2.5cm;
+			background: #555555;
+			border-radius: 1mm;
+			height: 12mm;
+			padding: 2mm;
+			box-sizing: border-box;
+		}
+
+		.maintenance-label-space {
+			background-color: #555555;
+			border-radius: 1mm;
+			flex: 3;
+			height: 12mm;
+			box-sizing: border-box;
+		}
+	}
+}
+
+.pre {
+	white-space: pre;
+}
+
+#preview .sign-root .sign-footer-tiny {
+	color: #666;
+	text-align: center;
+
+	p {
+		font-size: 9pt;
+		margin: 0mm;
+		margin-top: 1mm;
+	}
+}
+
+.all-root {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	font-family: 'Bitter', sans;
+}
+
+.sign-selector-all {
+	display: block;
+
+}
+
+@media only print {
+	.sign-selector-all {
+		display: none;
+	}
+}
