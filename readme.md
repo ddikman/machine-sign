@@ -19,5 +19,4 @@ yarn dev
 
 Since this is a React SPA (single page application), we need to GitHub pages to direct any url to open with the index.html file.
 
-By using [ghspa](https://github.com/websemantics/gh-pages-spa) and providing a `404.html` file, we can redirect missing (all non-root urls) to the index.html file.
-
+This is done in the [deploy.yaml](.github/workflows/deploy.yaml) very simply by providing a `404.html` which is a copy of the `index.html` file.

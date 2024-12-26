@@ -12,7 +12,6 @@
   "dependencies": {
     "@types/qrcode": "^1.5.5",
     "@types/yaml": "^1.9.7",
-    "ghspa": "^1.0.0",
     "qrcode": "^1.5.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
