@@ -6,7 +6,7 @@ interface SignContextType {
     signs: Sign[];
     loading: boolean;
     loadSigns: () => Promise<void>;
-    getSignByName: (name: string) => Sign | undefined;
+    getSignById: (id: string) => Sign | undefined;
 }
 
 const SignContext = createContext<SignContextType | undefined>(undefined);
@@ -45,12 +45,12 @@ export function SignProvider({ children }: { children: ReactNode }) {
         }
     };
 
-    const getSignByName = (name: string) => {
-        return signs.find(sign => sign.name === name);
+    const getSignById = (id: string) => {
+        return signs.find(sign => sign.uniqueId === id);
     };
 
     return (
-        <SignContext.Provider value={{ signs, loading, loadSigns, getSignByName }}>
+        <SignContext.Provider value={{ signs, loading, loadSigns, getSignById }}>
             {children}
         </SignContext.Provider>
     );

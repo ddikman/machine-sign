@@ -1,0 +1,78 @@
+
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+}
+
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.header {
+  background-color: #28a745;
+  color: white;
+  padding: 20px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 2.5em;
+}
+
+.create-button {
+  background-color: white;
+  color: #28a745;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  margin-top: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.create-button:hover {
+  background-color: #f8f9fa;
+}
+
+.machine-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.machine-item {
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.machine-item:hover {
+  background-color: #f8f9fa;
+}
+
+.machine-item:last-child {
+  border-bottom: none;
+}
+
+.machine-name {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 0 0 5px 0;
+}
+
+.machine-model {
+  color: #666;
+  margin: 0 0 5px 0;
+}
+
+.machine-update {
+  color: #888;
+  font-size: 0.9em;
+  margin: 0;
+}

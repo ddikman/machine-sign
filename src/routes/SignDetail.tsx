@@ -12,7 +12,7 @@ export function SignDetailWrapper() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const { loadSigns, getSignByName } = useSignStore();
+    const { loadSigns, getSignById: getSignByName } = useSignStore();
 
     useEffect(() => {
         setLoading(true);

@@ -49,6 +49,7 @@ export class Sign {
     slackChannel: string = "";
     paperSize: PaperSize = PaperSize.A4;
     sections: Sections = new Sections();
+    lastUpdated: Date = new Date();
 }
 
 export abstract class Section {
