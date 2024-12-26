@@ -52,8 +52,6 @@ interface SignDetailState {
 }
 
 export class SignDetail extends Component<SignDetailProps, SignDetailState> {
-    debouncedSave = debounce(() => this.save(), 2000);
-
     constructor(props: SignDetailProps) {
         super(props);
         this.state = { sign: props.sign, saving: false, dirty: false };
@@ -61,7 +59,6 @@ export class SignDetail extends Component<SignDetailProps, SignDetailState> {
 
     onChange() {
         this.setState({ dirty: true });
-        this.debouncedSave();
     }
 
     async save() {

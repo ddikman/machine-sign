@@ -1,4 +1,50 @@
 signs:
+  - uniqueId: glowforge
+    name: Glowforge
+    model: Pro
+    access: 0
+    courseURL: ""
+    outOfOrder: false
+    outOfOrderReason: ""
+    wikiURL: ""
+    slackChannel: ""
+    paperSize: 0
+    sections:
+      allowedMaterials:
+        customHeader: null
+        enabled: true
+        allowed: true
+        materials:
+          - label: Acrylic
+          - label: MDF
+          - label: Plywood
+      prohibitedMaterials:
+        customHeader: null
+        enabled: false
+        allowed: false
+        materials: []
+      safety:
+        customHeader: null
+        enabled: false
+        icons: []
+      cleanup:
+        customHeader: null
+        enabled: false
+        items: []
+      quickStart:
+        customHeader: Quick Start
+        enabled: false
+        contents: ""
+      outOfOrder:
+        customHeader: null
+        enabled: false
+        reason: ""
+      maintenance:
+        customHeader: null
+        enabled: false
+        rows: []
+    lastUpdated: 2024-12-26T22:37:22.322Z
+    imageUrl: https://shop.glowforge.com/cdn/shop/files/gf_pro_home_1200x.webp?v=1734042488
   - uniqueId: xtoolf1ultra
     name: XTool
     model: F1 Ultra
