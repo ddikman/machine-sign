@@ -3,6 +3,7 @@ import { SafetyItem, Material, Access, Sign, Section, SectionSafety, SectionMate
 import { safetyIcon2svg, safetyIcon2name, iconCleanup, ColorClass, iconAllowedMaterial, iconProhibitedMaterial } from './view_common';
 import * as QRCode from 'qrcode';
 import facebookIcon from '@/assets/facebook_icon.svg';
+import { DiscordQR } from './components/DiscordQR';
 
 
 const PreviewMaterial = ({ material, allowed }: { material: Material, allowed: boolean }) => (
@@ -191,22 +192,9 @@ const SignOutOfOrder = ({ sign }: { sign: Sign }) => {
     <PreviewSectionGroup className={ColorClass(sign)} name="Status">
       <span className="sign-access-label">This machine is out of order</span>
       {reason}
-      <p>See Facebook or Slack for updates</p>
+      <p>See Discord for updates</p>
       <div className="sign-outoforder-icons">
-        <div>
-          <img src={facebookIcon} />
-          <div>
-            <h3>Facebook</h3>
-            <p>facebook.com/groups/makerspace.se</p>
-          </div>
-        </div>
-        <div>
-          <img src="https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/306_Slack_logo-512.png" />
-          <div>
-            <h3>Slack</h3>
-            <p>#{sign.slackChannel || "general"}</p>
-          </div>
-        </div>
+        <DiscordQR />
       </div>
     </PreviewSectionGroup>
   );
@@ -255,23 +243,8 @@ class PreviewSignFooter extends Component<{ id: string | null, sign: Sign }, { q
             </div>
           </div>
           <div className={this.props.sign.paperSize == PaperSize.A5 ? "footer-item-right" : ""}>
-          <img src="https://cdn4.iconfinder.com/data/icons/logos-and-brands/512/306_Slack_logo-512.png" />
-            <div>
-              <h3>Slack</h3>
-              <p className="pre">#{this.props.sign.slackChannel || "general"}</p>
-            </div>
+            <DiscordQR />
           </div>
-          {
-            this.props.sign.paperSize == PaperSize.A4 ? (
-              <div>
-                <img src="/static/images/zondicons/exclamation-outline.svg" />
-                <div>
-                  <h3>Changes needed?</h3>
-                  <p className="pre">Edit this at ddikman.github.io/machine-sign.</p>
-                </div>
-              </div>)
-              : null
-          }
         </div>
         {
           this.props.sign.paperSize == PaperSize.A5 ? (
