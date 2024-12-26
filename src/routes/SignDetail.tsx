@@ -79,7 +79,9 @@ export class SignDetail extends Component<SignDetailProps, SignDetailState> {
         this.setState({ saving: true });
         try {
             const response = await fetch(
-                this.props.id !== null ? `data/signs/${this.props.id}` : 'data/signs',
+                this.props.id !== null
+                    ? `${import.meta.env.BASE_URL}data/signs/${this.props.id}`
+                    : `${import.meta.env.BASE_URL}data/signs`,
                 {
                     method: "POST",
                     headers: { 'Content-Type': 'application/json' },

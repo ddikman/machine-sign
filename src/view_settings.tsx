@@ -178,7 +178,7 @@ async function createGithubPR(sign: Sign) {
         const token = await authenticateWithGithub(import.meta.env.VITE_GITHUB_CLIENT_ID);
 
         const files = [{
-            path: `signs/${sign.name.toLowerCase().replace(/\s+/g, '-')}.json`,
+            path: `${import.meta.env.BASE_URL}signs/${sign.name.toLowerCase().replace(/\s+/g, '-')}.json`,
             content: JSON.stringify(sign, null, 2)
         }];
 
