@@ -193,10 +193,10 @@ const SignOutOfOrder = ({ sign }: { sign: Sign }) => {
   );
 }
 
-class PreviewSignFooter extends Component<{ id: number | null, sign: Sign }, { qrData: string }> {
+class PreviewSignFooter extends Component<{ id: string | null, sign: Sign }, { qrData: string }> {
   lastQRUrl: string | null = null;
 
-  constructor(props: { id: number | null, sign: Sign }) {
+  constructor(props: { id: string | null, sign: Sign }) {
     super(props);
     this.state = { qrData: "" };
     this.componentDidUpdate();
@@ -278,7 +278,7 @@ function PreviewSection({ section, useHorizontalList }: { section: Section, useH
   else throw new Error("Unexpected section type " + typeof (section));
 }
 
-export const PreviewSign = ({ sign, id }: { sign: Sign, id: number | null }) => {
+export const PreviewSign = ({ sign, id }: { sign: Sign, id: string | null }) => {
   if (sign.outOfOrder) {
     return (
       <div className="sign-root">

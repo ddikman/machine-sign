@@ -118,7 +118,7 @@ export class SignDetail extends Component<SignDetailProps, SignDetailState> {
                     </div>
                 </div>
                 <div id="preview">
-                    <PreviewSign sign={this.state.sign} id={this.props.id} />
+                    <PreviewSign sign={this.state.sign} id={this.props.id ?? null} />
                 </div>
             </div>
         );
