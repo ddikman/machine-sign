@@ -3,7 +3,6 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Sign } from '../types';
 import { PreviewSign } from '../view_preview';
 import { SettingsSign } from '../view_settings';
-import { debounce } from 'ts-debounce';
 import '../styles/layout.scss';
 import { useSignStore } from '@/store/SignContext';
 import * as Yaml from 'yaml';
