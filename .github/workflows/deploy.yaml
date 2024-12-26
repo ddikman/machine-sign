@@ -33,8 +33,6 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Build
-        env:
-          VITE_BASE_URL: /machine-sign/
         run: yarn build
 
       - name: Setup Pages

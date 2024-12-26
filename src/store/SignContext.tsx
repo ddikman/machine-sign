@@ -21,7 +21,7 @@ export function SignProvider({ children }: { children: ReactNode }) {
 
         setLoading(true);
         try {
-            const response = await fetch(import.meta.env.BASE_URL + 'data.yaml');
+            const response = await fetch('/data.yaml');
             const yamlString = await response.text();
             const dataJson = Yaml.parse(yamlString);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any

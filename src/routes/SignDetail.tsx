@@ -80,8 +80,8 @@ export class SignDetail extends Component<SignDetailProps, SignDetailState> {
         try {
             const response = await fetch(
                 this.props.id !== null
-                    ? `${import.meta.env.BASE_URL}data/signs/${this.props.id}`
-                    : `${import.meta.env.BASE_URL}data/signs`,
+                    ? `/data/signs/${this.props.id}`
+                    : `/data/signs`,
                 {
                     method: "POST",
                     headers: { 'Content-Type': 'application/json' },
