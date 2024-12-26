@@ -6,13 +6,14 @@ import { SettingsSign } from '../view_settings';
 import { debounce } from 'ts-debounce';
 import '../styles/layout.scss';
 import { useSignStore } from '@/store/SignContext';
+import * as Yaml from 'yaml';
 
 // Wrapper to convert class component to function component to use hooks
 export function SignDetailWrapper() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
-    const { loadSigns, getSignById: getSignByName } = useSignStore();
+    const { loadSigns, getSignById: getSignByName, signs } = useSignStore();
 
     useEffect(() => {
         setLoading(true);
@@ -34,12 +35,13 @@ export function SignDetailWrapper() {
     }
 
 
-    return <SignDetail id={id} navigate={navigate} sign={sign} />;
+    return <SignDetail id={id} navigate={navigate} sign={sign} signs={signs} />;
 }
 
 interface SignDetailProps {
     id: string | undefined;
     sign: Sign;
+    signs: Sign[];
     navigate: (path: string) => void;
 }
 
@@ -65,25 +67,22 @@ export class SignDetail extends Component<SignDetailProps, SignDetailState> {
     async save() {
         if (this.state.saving || !this.state.sign) return;
 
-        this.setState({ saving: true });
-        try {
-            const response = await fetch(
-                this.props.id !== null
-                    ? `/data/signs/${this.props.id}`
-                    : `/data/signs`,
-                {
-                    method: "POST",
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(this.state.sign)
-                }
-            );
-            const json = await response.json();
+        const otherSigns = this.props.signs.filter(s => s.uniqueId !== this.state.sign.uniqueId);
+        const signs = {
+          signs: [
+            this.state.sign,
+            ...otherSigns
+          ]
+        }
+        const yaml = Yaml.stringify(signs, (key, value) => key === '__type__' ? undefined : value)
 
-            if (this.props.id === null) {
-                this.props.navigate(`/${json.data.id}`);
-            }
-            this.setState({ dirty: false });
-        } finally {
+        try {
+            this.setState({ saving: true });
+            await navigator.clipboard.writeText(yaml);
+            this.setState({ saving: false, dirty: false });
+            alert("Yaml copied to clipboard");
+        } catch (err) {
+            console.error("Failed to copy to clipboard:", err);
             this.setState({ saving: false });
         }
     }
@@ -99,8 +98,6 @@ export class SignDetail extends Component<SignDetailProps, SignDetailState> {
                             onChange={() => this.onChange()}
                             onSave={() => this.save()}
                             onDelete={null}
-                            autosaved={this.props.id !== null}
-                            saving={this.state.saving ? 'saving' : (this.state.dirty ? 'dirty' : 'saved')}
                         />
                     </div>
                 </div>

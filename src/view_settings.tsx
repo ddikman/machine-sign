@@ -1,9 +1,6 @@
 import { SafetyIcon, Material, Access, Sign, Section, SectionSafety, SectionMaterials, SectionFreeText, SafetyItem, SectionCleanup, CleanupItem, PaperSize, SectionMaintenance, MaintenanceItem, } from './types';
 import { safetyIcon2name, iconDelete } from './view_common';
-import { authenticateWithGithub, createPullRequest } from './github';
-import * as Yaml from 'yaml';
 import './style.scss';
-import { useSignStore } from './store/SignContext';
 
 type OnChange = () => void;
 type OnChangeBool = (value: boolean) => void;
@@ -170,82 +167,26 @@ function SettingsSection({ section, onChange }: { section: Section, onChange: On
     else throw new Error("Unexpected section type " + typeof (section));
 }
 
-type SaveState = 'saved' | 'saving' | 'dirty';
-
-async function createGithubPR(sign: Sign, signs: Sign[]) {
-
-    if (!sign.uniqueId) {
-        alert("Unique short id is required");
-        return;
-    }
-
-    sign.lastUpdated = new Date(new Date().getUTCDate());
-
-    const updatedSigns = {
-      signs: [
-        ...signs.filter(s => s.uniqueId !== sign.uniqueId),
-        sign
-      ]
-    }
-
-    const yamlString = Yaml.stringify(updatedSigns)
-      .split('\n').filter(line => !line.includes('__type__')).join('\n');
-
-    try {
-        const token = await authenticateWithGithub(import.meta.env.VITE_GITHUB_CLIENT_ID);
-
-        const files = [{
-            path: `/public/data.yaml`,
-            content: yamlString
-        }];
-
-        const prUrl = await createPullRequest(
-            token,
-            'ddikman',
-            'machine-sign',
-            'main',
-            `Update sign: ${sign.name}`,
-            files
-        );
-
-        window.open(prUrl, '_blank');
-    } catch (error) {
-        console.error('Failed to create PR:', error);
-        alert('Failed to create GitHub PR. Please try again.');
-    }
-}
-
-function SettingsSave({ onSave, onDelete, autosaved, saving, sign }: {
+function SettingsSave({ onSave, onDelete }: {
     onSave: () => void,
     onDelete: null | (() => void),
-    autosaved: boolean,
-    saving: SaveState,
-    sign: Sign
 }) {
-
-    const { signs } = useSignStore();
-
     return (
         <SettingsSectionGroup
             enabled={true}
             name="Save"
         >
             {onDelete && <button onClick={onDelete}>Delete</button>}
-            {/* <button onClick={onSave}>
-                {saving == 'saving' || saving == 'dirty' ? "Saving..." : (autosaved ? "Autosaved" : "Save")}
-            </button> */}
-            <button style={{ whiteSpace: 'nowrap', width: '100%', padding: '1mm 5mm', maxWidth: '-webkit-fill-available' }} onClick={() => createGithubPR(sign, signs)}>Create GitHub PR</button>
+            <button onClick={onSave}>Copy complete yaml</button>
         </SettingsSectionGroup>
     )
 }
 
-export const SettingsSign = ({ sign, onChange, onSave, onDelete, autosaved, saving }: {
+export const SettingsSign = ({ sign, onChange, onSave, onDelete }: {
     sign: Sign,
     onChange: OnChange,
     onSave: () => void,
     onDelete: null | (() => void),
-    autosaved: boolean,
-    saving: SaveState
 }) => {
     const sections = sign.sections;
     const arr = [
@@ -262,7 +203,7 @@ export const SettingsSign = ({ sign, onChange, onSave, onDelete, autosaved, savi
         <SignOutOfOrder sign={sign} onChange={onChange} />
         {arr.map(s => <SettingsSection key={s.defaultHeader()} section={s} onChange={onChange} />)}
         <SettingsSignFooter sign={sign} onChange={onChange} />
-        <SettingsSave onSave={onSave} onDelete={onDelete} autosaved={autosaved} saving={saving} sign={sign} />
+        <SettingsSave onSave={onSave} onDelete={onDelete} />
     </>);
 };
 

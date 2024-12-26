@@ -5,7 +5,6 @@ import './index.css'
 import './styles/layout.scss'
 import { SignList } from './routes/SignList'
 import { SignDetailWrapper } from './routes/SignDetail'
-import { GitHubCallback } from './github-callback'
 import './style.scss';
 import { SignProvider } from './store/SignContext'
 
@@ -21,10 +20,6 @@ const router = createBrowserRouter([
     {
         path: "/sign/:id",
         element: <SignDetailWrapper />,
-    },
-    {
-        path: "/github-callback",
-        element: <GitHubCallback />,
     }
 ]);
 

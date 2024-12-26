@@ -4,8 +4,6 @@ signs:
     model: F1 Ultra
     access: 0
     courseURL: https://xtool.com
-    imageUrl: https://cdn.shopify.com/s/files/1/0467/7985/9095/files/f1-ultra-banner-pc-01.jpg?v=1727507870&width=1028
-    lastUpdated: 2024-12-26T12:00:00Z
     outOfOrder: false
     outOfOrderReason: ""
     wikiURL: ""
@@ -46,3 +44,5 @@ signs:
         customHeader: null
         enabled: false
         rows: []
+    lastUpdated: 2024-12-26T12:00:00Z
+    imageUrl: https://www.xtool.eu/cdn/shop/files/F1_584fa2f6-bd06-44e9-a191-6ca6d93fb378.jpg?v=1716970873&width=5472
