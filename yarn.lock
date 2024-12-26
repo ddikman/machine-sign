@@ -1124,6 +1124,11 @@ get-caller-file@^2.0.1:
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-2.0.5.tgz#4f94412a82db32f36e3b0b9741f8a97feb031f7e"
   integrity sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==
 
+ghspa@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ghspa/-/ghspa-1.0.0.tgz#ed6626bbacff12c5c4ee2f1f0aeacef0e66e62ff"
+  integrity sha512-90wuxOUaFuy6LoEN9UOYQjAco9yY6CitNB9iH5yOeptMk74OcR9TdLUCk6mZKF3+jN5YOVNlXQNZbGh+rt4oTg==
+
 glob-parent@^5.1.2:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-5.1.2.tgz#869832c58034fe68a4093c17dc15e8340d8401c4"
