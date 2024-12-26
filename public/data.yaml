@@ -1,0 +1,46 @@
+signs:
+  - uniqueId: xtoolf1ultra
+    name: XTool
+    model: F1 Ultra
+    access: 0
+    courseURL: https://xtool.com
+    outOfOrder: false
+    outOfOrderReason: ""
+    wikiURL: ""
+    slackChannel: ""
+    paperSize: 0
+    sections:
+      allowedMaterials:
+        customHeader: null
+        enabled: true
+        allowed: true
+        materials:
+          - label: Plastic
+      prohibitedMaterials:
+        customHeader: null
+        enabled: true
+        allowed: false
+        materials:
+          - label: Iron
+      safety:
+        customHeader: null
+        enabled: true
+        icons:
+          - icon: 2
+            label: ""
+      cleanup:
+        customHeader: null
+        enabled: false
+        items: []
+      quickStart:
+        customHeader: Quick Start
+        enabled: false
+        contents: ""
+      outOfOrder:
+        customHeader: null
+        enabled: false
+        reason: ""
+      maintenance:
+        customHeader: null
+        enabled: false
+        rows: []

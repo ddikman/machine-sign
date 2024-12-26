@@ -1,21 +1,29 @@
-import { Component } from 'react';
+import { Component, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { Sign } from '../data';
+import { Sign } from '../types';
 import { PreviewSign } from '../view_preview';
 import { SettingsSign } from '../view_settings';
 import { debounce } from 'ts-debounce';
 import '../styles/layout.scss';
+import { useSignStore } from '@/store/SignContext';
 
 // Wrapper to convert class component to function component to use hooks
 export function SignDetailWrapper() {
     const { id } = useParams();
     const navigate = useNavigate();
-    return <SignDetail id={id ? parseInt(id) : null} navigate={navigate} />;
+    const { loadSigns, getSignByName } = useSignStore();
+
+    useEffect(() => {
+        loadSigns();
+    }, [loadSigns]);
+
+    return <SignDetail id={id} navigate={navigate} getSignByName={getSignByName} />;
 }
 
 interface SignDetailProps {
-    id: number | null;
+    id: string | undefined;
     navigate: (path: string) => void;
+    getSignByName: (name: string) => Sign | undefined;
 }
 
 interface SignDetailState {
@@ -43,7 +51,7 @@ export class SignDetail extends Component<SignDetailProps, SignDetailState> {
     }
 
     async loadSign() {
-        if (this.props.id === null) {
+        if (!this.props.id) {
             const sign = new Sign();
             sign.name = "New Sign";
             this.setState({ sign, saving: false, dirty: false });
@@ -51,17 +59,13 @@ export class SignDetail extends Component<SignDetailProps, SignDetailState> {
             return;
         }
 
-        // TODO: Implement using local data
-        // try {
-        //     const response = await fetch(`data/signs/${this.props.id}`);
-        //     const json = await response.json();
-        //     const sign = new Sign();
-        //     initializeWithJson(sign, json.data.data);
-        //     this.setState({ sign, saving: false, dirty: false });
-        // } catch (error) {
-        //     console.error(error);
-        //     this.props.navigate('/');
-        // }
+        const existingSign = this.props.getSignByName(this.props.id);
+        if (existingSign) {
+            this.setState({ sign: existingSign, saving: false, dirty: false });
+        } else {
+            console.error('Sign not found');
+            this.props.navigate('/');
+        }
     }
 
     onChange() {

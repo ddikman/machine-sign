@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { SafetyItem, Material, Access, Sign, Section, SectionSafety, SectionMaterials, SectionFreeText, SectionCleanup, PaperSize, type CleanupItem, SectionMaintenance, MaintenanceItem } from './data';
+import { SafetyItem, Material, Access, Sign, Section, SectionSafety, SectionMaterials, SectionFreeText, SectionCleanup, PaperSize, type CleanupItem, SectionMaintenance, MaintenanceItem } from './types';
 import { safetyIcon2svg, safetyIcon2name, iconCleanup, ColorClass, iconAllowedMaterial, iconProhibitedMaterial } from './view_common';
 import * as QRCode from 'qrcode';
 

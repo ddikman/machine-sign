@@ -7,6 +7,7 @@ import { SignList } from './routes/SignList'
 import { SignDetailWrapper } from './routes/SignDetail'
 import { GitHubCallback } from './github-callback'
 import './style.scss';
+import { SignProvider } from './store/SignContext'
 
 const basename = import.meta.env.VITE_BASE_URL || '/'
 
@@ -33,6 +34,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <RouterProvider router={router} />
+        <SignProvider>
+            <RouterProvider router={router} />
+        </SignProvider>
     </StrictMode>,
 )

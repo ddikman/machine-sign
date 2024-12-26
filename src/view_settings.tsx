@@ -1,6 +1,7 @@
-import { SafetyIcon, Material, Access, Sign, Section, SectionSafety, SectionMaterials, SectionFreeText, SafetyItem, SectionCleanup, CleanupItem, PaperSize, SectionMaintenance, MaintenanceItem, } from './data';
+import { SafetyIcon, Material, Access, Sign, Section, SectionSafety, SectionMaterials, SectionFreeText, SafetyItem, SectionCleanup, CleanupItem, PaperSize, SectionMaintenance, MaintenanceItem, } from './types';
 import { safetyIcon2name, iconDelete } from './view_common';
 import { authenticateWithGithub, createPullRequest } from './github';
+import * as Yaml from 'yaml';
 import './style.scss';
 
 type OnChange = () => void;
@@ -169,6 +170,10 @@ function SettingsSection({ section, onChange }: { section: Section, onChange: On
 type SaveState = 'saved' | 'saving' | 'dirty';
 
 async function createGithubPR(sign: Sign) {
+
+    const yamlString = Yaml.stringify(sign);
+    console.log(yamlString.split('\n').filter(line => !line.includes('__type__')).join('\n'));
+
     try {
         const token = await authenticateWithGithub(import.meta.env.VITE_GITHUB_CLIENT_ID);
 

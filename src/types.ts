@@ -38,6 +38,7 @@ export enum Access {
 
 export class Sign {
     protected __type__ = "Sign";
+    uniqueId: string = "";
     name: string = "";
     model: string = "";
     access: Access = Access.UsableByEveryone;

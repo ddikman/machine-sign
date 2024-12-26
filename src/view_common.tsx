@@ -1,4 +1,4 @@
-import { Access, Sign, SafetyIcon } from './data';
+import { Access, Sign, SafetyIcon } from './types';
 
 export const safetyIcon2svg: { [id: number]: string } = {};
 safetyIcon2svg[SafetyIcon.SafetyGlasses] = "static/images/safety_icons/safety-glasses.svg";
