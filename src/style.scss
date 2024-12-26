@@ -115,10 +115,25 @@ body {
 		font-size: 12pt;
 	}
 
+  .sign-header {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 5mm;
+  }
+
+  .sign-header-image {
+    max-height: 100%;
+    width: auto;
+    object-fit: contain;
+    border-radius: 1mm;
+  }
+
 	.sign-name {
 		//background: #1877B7;
 		padding: 2mm 5mm 1mm 10mm;
-		flex-grow: 0;
+		flex-grow: 1;
+    height: fit-content;
 
 		span {
 			margin: 0mm;

@@ -50,6 +50,7 @@ export class Sign {
     paperSize: PaperSize = PaperSize.A4;
     sections: Sections = new Sections();
     lastUpdated: Date = new Date();
+    imageUrl: string | undefined;
 }
 
 export abstract class Section {

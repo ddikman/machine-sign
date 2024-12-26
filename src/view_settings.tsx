@@ -3,6 +3,7 @@ import { safetyIcon2name, iconDelete } from './view_common';
 import { authenticateWithGithub, createPullRequest } from './github';
 import * as Yaml from 'yaml';
 import './style.scss';
+import { useSignStore } from './store/SignContext';
 
 type OnChange = () => void;
 type OnChangeBool = (value: boolean) => void;
@@ -114,12 +115,14 @@ const SignHeader = ({ sign, onChange }: { sign: Sign, onChange: OnChange }) => {
     const accessLevels = Object.values(Access).filter((v): v is number => typeof v === 'number');
 
     return (<SettingsSectionGroup name="Machine">
+        <input type="text" placeholder="Unique short id" value={sign.uniqueId} onInput={e => { sign.uniqueId = (e.target as HTMLInputElement).value.toLowerCase(); onChange(); }} />
         <input type="text" placeholder="Machine name" value={sign.name} onInput={e => { sign.name = (e.target as HTMLInputElement).value; onChange(); }} />
         <input type="text" placeholder="Machine model" value={sign.model} onInput={e => { sign.model = (e.target as HTMLInputElement).value; onChange(); }} />
         <select value={sign.access} onInput={e => { sign.access = Number((e.target as HTMLSelectElement).value) as Access; onChange(); }}>
             {accessLevels.map(v => (<option key={v} value={v}>{accessMessage[v]}</option>))}
         </select>
         <input type="text" placeholder="Course URL" value={sign.courseURL} onInput={e => { sign.courseURL = (e.target as HTMLInputElement).value; onChange(); }} />
+        <input type="text" placeholder="Image URL" value={sign.imageUrl} onInput={e => { sign.imageUrl = (e.target as HTMLInputElement).value; onChange(); }} />
     </SettingsSectionGroup>);
 }
 
@@ -169,23 +172,37 @@ function SettingsSection({ section, onChange }: { section: Section, onChange: On
 
 type SaveState = 'saved' | 'saving' | 'dirty';
 
-async function createGithubPR(sign: Sign) {
+async function createGithubPR(sign: Sign, signs: Sign[]) {
 
-    const yamlString = Yaml.stringify(sign);
-    console.log(yamlString.split('\n').filter(line => !line.includes('__type__')).join('\n'));
+    if (!sign.uniqueId) {
+        alert("Unique short id is required");
+        return;
+    }
+
+    sign.lastUpdated = new Date(new Date().getUTCDate());
+
+    const updatedSigns = {
+      signs: [
+        ...signs.filter(s => s.uniqueId !== sign.uniqueId),
+        sign
+      ]
+    }
+
+    const yamlString = Yaml.stringify(updatedSigns)
+      .split('\n').filter(line => !line.includes('__type__')).join('\n');
 
     try {
         const token = await authenticateWithGithub(import.meta.env.VITE_GITHUB_CLIENT_ID);
 
         const files = [{
-            path: `/signs/${sign.name.toLowerCase().replace(/\s+/g, '-')}.json`,
-            content: JSON.stringify(sign, null, 2)
+            path: `/public/data.yaml`,
+            content: yamlString
         }];
 
         const prUrl = await createPullRequest(
             token,
-            'your-org',
-            'your-repo',
+            'ddikman',
+            'machine-sign',
             'main',
             `Update sign: ${sign.name}`,
             files
@@ -205,18 +222,19 @@ function SettingsSave({ onSave, onDelete, autosaved, saving, sign }: {
     saving: SaveState,
     sign: Sign
 }) {
+
+    const { signs } = useSignStore();
+
     return (
         <SettingsSectionGroup
             enabled={true}
             name="Save"
         >
             {onDelete && <button onClick={onDelete}>Delete</button>}
-            <button onClick={onSave}>
+            {/* <button onClick={onSave}>
                 {saving == 'saving' || saving == 'dirty' ? "Saving..." : (autosaved ? "Autosaved" : "Save")}
-            </button>
-            <button onClick={() => createGithubPR(sign)}>
-                Create GitHub PR
-            </button>
+            </button> */}
+            <button style={{ whiteSpace: 'nowrap', width: '100%', padding: '1mm 5mm', maxWidth: '-webkit-fill-available' }} onClick={() => createGithubPR(sign, signs)}>Create GitHub PR</button>
         </SettingsSectionGroup>
     )
 }

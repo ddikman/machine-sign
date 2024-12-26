@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, useEffect, useRef, useState } from 'react';
 import { SafetyItem, Material, Access, Sign, Section, SectionSafety, SectionMaterials, SectionFreeText, SectionCleanup, PaperSize, type CleanupItem, SectionMaintenance, MaintenanceItem } from './types';
 import { safetyIcon2svg, safetyIcon2name, iconCleanup, ColorClass, iconAllowedMaterial, iconProhibitedMaterial } from './view_common';
 import * as QRCode from 'qrcode';
@@ -96,10 +96,29 @@ const PreviewSectionCleanup = ({ section }: { section: SectionCleanup }) => (
 const SignHeader = ({ sign }: { sign: Sign }) => {
   const model = sign.model ? (<span id="machine-model">Model: {sign.model}</span>) : null;
 
+  // Bit of a hack to reduce the image height to match the name height
+  const nameRef = useRef<HTMLDivElement>(null);
+  const [imageHeight, setImageHeight] = useState(0);
+
+  useEffect(() => {
+    if (nameRef.current) {
+      setImageHeight(nameRef.current.offsetHeight);
+    }
+  }, [nameRef]);
+
   return (
-    <div className={`sign-section sign-name ${ColorClass(sign)}`}>
-      <h1 id="machine-name">{sign.name}</h1>
-      {model}
+    <div className="sign-header">
+      <div className={`sign-section sign-name ${ColorClass(sign)}`} ref={nameRef}>
+        <h1 id="machine-name">{sign.name}</h1>
+        {model}
+      </div>
+      {sign.imageUrl ? (
+        <img
+          src={sign.imageUrl}
+          className="sign-header-image"
+          style={{height: imageHeight}}
+        />
+      ) : null}
     </div>
   );
 }
