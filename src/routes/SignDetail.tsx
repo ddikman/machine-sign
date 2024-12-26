@@ -1,4 +1,4 @@
-import { Component, useEffect } from 'react';
+import { Component, useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Sign } from '../types';
 import { PreviewSign } from '../view_preview';
@@ -11,23 +11,40 @@ import { useSignStore } from '@/store/SignContext';
 export function SignDetailWrapper() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
     const { loadSigns, getSignByName } = useSignStore();
 
     useEffect(() => {
+        setLoading(true);
         loadSigns();
+        setLoading(false);
     }, [loadSigns]);
 
-    return <SignDetail id={id} navigate={navigate} getSignByName={getSignByName} />;
+    if (loading) return <div>Loading...</div>;
+
+    let sign: Sign;
+    if (id) {
+        const matchingSign = getSignByName(id);
+        if (!matchingSign) {
+            return <div>Sign not found</div>;
+        }
+        sign = matchingSign;
+    } else {
+        sign = new Sign();
+    }
+
+
+    return <SignDetail id={id} navigate={navigate} sign={sign} />;
 }
 
 interface SignDetailProps {
     id: string | undefined;
+    sign: Sign;
     navigate: (path: string) => void;
-    getSignByName: (name: string) => Sign | undefined;
 }
 
 interface SignDetailState {
-    sign: Sign | null;
+    sign: Sign;
     saving: boolean;
     dirty: boolean;
 }
@@ -37,35 +54,7 @@ export class SignDetail extends Component<SignDetailProps, SignDetailState> {
 
     constructor(props: SignDetailProps) {
         super(props);
-        this.state = { sign: null, saving: false, dirty: false };
-    }
-
-    componentDidMount() {
-        this.loadSign();
-    }
-
-    componentDidUpdate(prevProps: SignDetailProps) {
-        if (prevProps.id !== this.props.id) {
-            this.loadSign();
-        }
-    }
-
-    async loadSign() {
-        if (!this.props.id) {
-            const sign = new Sign();
-            sign.name = "New Sign";
-            this.setState({ sign, saving: false, dirty: false });
-            console.log('Loaded new page with empty sign');
-            return;
-        }
-
-        const existingSign = this.props.getSignByName(this.props.id);
-        if (existingSign) {
-            this.setState({ sign: existingSign, saving: false, dirty: false });
-        } else {
-            console.error('Sign not found');
-            this.props.navigate('/');
-        }
+        this.state = { sign: props.sign, saving: false, dirty: false };
     }
 
     onChange() {
@@ -100,8 +89,6 @@ export class SignDetail extends Component<SignDetailProps, SignDetailState> {
     }
 
     render() {
-        if (!this.state.sign) return <div>Loading...</div>;
-
         return (
             <div className="app-root">
                 <div id="settings">
