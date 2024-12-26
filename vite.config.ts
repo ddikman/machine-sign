@@ -12,4 +12,12 @@ export default defineConfig({
   },
   base: process.env.VITE_BASE_URL || '/',
   publicDir: 'public',
+  experimental: {
+    renderBuiltUrl(filename: string, { hostType }: { hostType: 'js' | 'css' | 'html' }) {
+      if (hostType === 'html' && filename.startsWith('/static/')) {
+        return `${process.env.VITE_BASE_URL || '/'}${filename.slice(1)}`
+      }
+      return filename
+    }
+  }
 })
